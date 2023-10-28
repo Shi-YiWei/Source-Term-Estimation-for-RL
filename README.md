@@ -27,6 +27,8 @@ The action in the discrete action space is [front, back, left, right].
 
 The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$
 
+
+## References and links
 Only when the robot successfully estimates the source term, the reward is +100; otherwise, the reward for each step is -1.
 
 For specific details, see [Information-theoretic search of an atmospheric release using a mobile sensor] (https://github.com/Cunjia-Liu/AutoSTE#information-theoretic-search-of-an-atmospheric-release-using-a-mobile-sensor).
