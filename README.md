@@ -17,6 +17,7 @@ The STE environments for the discrete and continuous action spaces are implement
 
 
 
+
 The action in the discrete action space is [front, back, left, right].  
 
 The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$
