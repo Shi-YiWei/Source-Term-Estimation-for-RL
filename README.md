@@ -5,6 +5,8 @@ The STE environments for the discrete and continuous action spaces are implement
 
 ## Latest Version
 ![avatar](img/plume_model.png){width=200}. ![avatar](img/sensor_map.png){width=200}.
+<img src="img/plume_model" alt="avatar" width="300"/>
+<img src="img/sensor_map.png" alt="avatar" width="300"/>
 
 The action in the discrete action space is [front, back, left, right].  
 
