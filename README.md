@@ -6,13 +6,13 @@ The STE environments for the discrete and continuous action spaces are implement
 ## Latest Version
 <figure>
   <img src="img/plume_model.png" alt="avatar" width="300"/>
-  <figcaption>plume model</figcaption>
+  <figcaption>Map of plume model</figcaption>
 </figure>
 
 
 <figure>
   <img src="img/sensor_map.png" alt="avatar" width="300"/>
-  <figcaption>sensor map</figcaption>
+  <figcaption>Map of sensor map</figcaption>
 </figure>
 
 
