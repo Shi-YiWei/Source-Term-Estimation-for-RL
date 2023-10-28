@@ -4,12 +4,16 @@ The Environment of Source Term Estimation (STE) for RL
 The STE environments for the discrete and continuous action spaces are implemented in folder STE_Env_continuous discrete and folder STE_Env_continuous, respectively.
 
 ## Latest Version
+<figure>
+  <img src="img/plume_model.png" alt="avatar" width="300"/>
+  <figcaption>plume model</figcaption>
+<\figure>
 
-<img src="img/plume_model.png" alt="avatar" width="300"/>
-*plume model*
 
-<img src="img/sensor_map.png" alt="avatar" width="300"/>
-*sensor map*
+<figure>
+  <img src="img/sensor_map.png" alt="avatar" width="300"/>
+  <figcaption>sensor map</figcaption>
+<\figure>
 
 
 
