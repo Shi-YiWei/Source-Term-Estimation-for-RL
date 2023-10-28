@@ -8,6 +8,14 @@ The STE environments for the discrete and continuous action spaces are implement
 <img src="img/plume_model.png" alt="avatar" width="300"/>
 <img src="img/sensor_map.png" alt="avatar" width="300"/>
 
+<div style="display: inline-block; margin-right: 10px;">
+    <img src="img/plume_model.png" alt="Image 1" width="300"/>
+</div>
+<div style="display: inline-block;">
+    <img src="img/sensor_map.png" alt="Image 2" width="300"/>
+</div>
+
+
 The action in the discrete action space is [front, back, left, right].  
 
 The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$
