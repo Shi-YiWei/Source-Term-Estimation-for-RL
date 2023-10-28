@@ -25,7 +25,7 @@ The red dots are the position of the robot at each step, the black squares are t
 ## Action space
 The action in the discrete action space is [front, back, left, right].  
 
-The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$
+The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$.
 
 
 ## References and links
