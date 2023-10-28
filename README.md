@@ -4,9 +4,9 @@ The Environment of Source Term Estimation (STE) for RL
 The STE environments for the discrete and continuous action spaces are implemented in folder STE_Env_continuous discrete and folder STE_Env_continuous, respectively.
 
 ## Latest Version
-![avatar](img/plume_model.png). ![avatar](img/sensor_map.png)
+![avatar](img/plume_model.png). ![avatar](img/sensor_map.png){width=300}.
 
-The action in the discrete action space is [front, back, left, right].  
+The action in the discrete action space is [front, back, left, right]{width=300}.  
 
 The action in continuous action space is $` r sin\theta `$, $` r `$ denotes speed, $` \theta \in [-\pi,\pi]`$
 
