@@ -17,7 +17,7 @@ The STE environments for the discrete and continuous action spaces are implement
 
 ## Scene Renderer Interface
 <figure>
-  <img src="img/sensor_map.png" alt="avatar" width="300"/>
+  <img src="img/instance.png" alt="avatar" width="300"/>
   <figcaption>Scene Renderer Interface</figcaption>
 </figure>
 
