@@ -26,7 +26,7 @@ The red dots are the position of the robot at each step, the black squares are t
   <img src="img/continuos.png" alt="avatar" width="300"/>
   <figcaption>Scene Renderer Interface (Continuous)</figcaption>
 </figure>  
-img/continuos.png
+
 
 
 
