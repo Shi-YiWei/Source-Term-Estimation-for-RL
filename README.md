@@ -18,9 +18,17 @@ The STE environments for the discrete and continuous action spaces are implement
 ## Scene Renderer Interface
 <figure>
   <img src="img/instance.png" alt="avatar" width="300"/>
-  <figcaption>Scene Renderer Interface</figcaption>
+  <figcaption>Scene Renderer Interface (Discrete)</figcaption>
 </figure>  
 The red dots are the position of the robot at each step, the black squares are the position of the SOURCE TERM (which is not known to the robot or Agent), and the green dots are the particles for particle filtering.
+
+<figure>
+  <img src="img/continuos.png" alt="avatar" width="300"/>
+  <figcaption>Scene Renderer Interface (Continuous)</figcaption>
+</figure>  
+img/continuos.png
+
+
 
 ## Action space
 The action in the discrete action space is [front, back, left, right].  
