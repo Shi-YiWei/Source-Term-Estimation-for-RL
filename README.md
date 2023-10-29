@@ -1,7 +1,7 @@
 # Source-Term-Estimation-for-RL
 The Environment of Source Term Estimation (STE) for RL
 
-The STE environments for the discrete and continuous action spaces are implemented in folder STE_Env_continuous discrete and folder STE_Env_continuous, respectively.
+The STE environments for the **discrete and** **continuous action** spaces are implemented in folder **STE_Env_continuous discrete** and folder **STE_Env_continuous**, respectively.
 
 ## Map of Map of plume mode and map of sensor map 
 <figure>
@@ -40,4 +40,4 @@ The action in continuous action space is $` r sin\theta `$, $` r `$ denotes spee
 Only when the robot successfully estimates the source term, the reward is +100; otherwise, the reward for each step is -1.
 
 For specific details, see [Information-theoretic search of an atmospheric release using a mobile sensor] (https://github.com/Cunjia-Liu/AutoSTE#information-theoretic-search-of-an-atmospheric-release-using-a-mobile-sensor).
-The code in the link (from Prof. Cunjia's github) is the Matlab version, a Python version of the code is given in the folder AutoSTE_python
+The code in the link (**from Prof. Cunjia's github**) is the **Matlab version**, **a Python version** of the code is given in the folder AutoSTE_python
