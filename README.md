@@ -40,4 +40,4 @@ The action in continuous action space is $` r sin\theta `$, $` r `$ denotes spee
 Only when the robot successfully estimates the source term, the reward is +100; otherwise, the reward for each step is -1.
 
 For specific details, see [Information-theoretic search of an atmospheric release using a mobile sensor] (https://github.com/Cunjia-Liu/AutoSTE#information-theoretic-search-of-an-atmospheric-release-using-a-mobile-sensor).
-The code in the link (**from Prof. Cunjia's github**) is the **Matlab version**, **a Python version** of the code is given in the folder AutoSTE_python
+The code in the link (**from Prof. Cunjia's github**) is the **Matlab version**, **a Python version** of the code is given in the folder **AutoSTE_python**
