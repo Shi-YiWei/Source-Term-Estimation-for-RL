@@ -1,6 +1,9 @@
 import gym
 from gym import spaces
 
+import random
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from .core import hLikePlume, mcmcPF, resampling_index
@@ -12,25 +15,15 @@ from .plot_ import drawPlume
 
 
 class PlumeEnvironment(gym.Env):
-    def __init__(self, length, width, height, max_step, startingPosition, render=False):
+    def __init__(self, length, width, height, max_step, render=False):
         super(PlumeEnvironment, self).__init__()
 
         self.length = length
         self.width = width
         self.height = height
         self.max_step = max_step
-        self.startingPosition = startingPosition
-        self.source_param = {
-            "Q": 5,  # Release rate per time unit
-            # source coordinates
-            "x": 15.5,
-            "y": 16.6,
-            "z": 0,
-            "u": 2,  # wind speed
-            "phi": 45 * np.pi / 180,  # wind direction
-            "ci": 2,
-            "cii": 10,
-        }
+        self.startingPosition = np.array([0, 0, 0])
+
         self.sensor_param = {
             "thresh": 5e-10,  # sensor threshold
             "Pd": 0.7,  # probability of detection
@@ -49,12 +42,12 @@ class PlumeEnvironment(gym.Env):
         }
         self.render_if = render
         self.domain = [0, length, 0, width, 0, height]
-        self.goal = np.array([self.source_param["x"], self.source_param["y"], self.source_param["z"]])
+
 
         self.action_space = spaces.Box(low=-np.pi, high=np.pi, shape=(1,))  # Define the action space
         self.observation_space = spaces.Box(low=np.zeros(3), high=np.array([length, width, height]))
 
-        self.N = 2000  # number of particles
+        self.N = 700  # number of particles
         self.speed = 1
         self.threshold = 0.2
         self.estimated_list = []
@@ -65,6 +58,21 @@ class PlumeEnvironment(gym.Env):
         # ...
 
     def reset(self, nsg):
+
+        self.source_param = {
+            "Q": 5,  # Release rate per time unit
+            # source coordinates
+            "x": random.randint(5, 20),
+            "y": random.randint(5, 20),
+            "z": 0,
+            "u": 2,  # wind speed
+            "phi": 45 * np.pi / 180,  # wind direction
+            "ci": 2,
+            "cii": 10,
+        }
+        self.goal = np.array([self.source_param["x"], self.source_param["y"], self.source_param["z"]])
+
+
         self.count_eps += 1
         nsg_n = nsg.next_seed()
         np.random.seed(nsg_n)
