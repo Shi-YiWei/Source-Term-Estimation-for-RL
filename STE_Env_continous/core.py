@@ -6,8 +6,8 @@ import time
 
 
 
-def plumeModel(s, p, nsg_n):
-
+def plumeModel(s, p, nsg):
+    nsg_n = nsg.next_seed()
     np.random.seed(nsg_n)
 
     # Plume dispersion model
@@ -77,7 +77,7 @@ def sensorModel(s, pos, m, nsg):
     np.random.seed(nsg_n)
     # Generate simulated sensor data based on the source term, sensor position, and sensor characteristics
 
-    conc = plumeModel(s, pos, nsg_n)
+    conc = plumeModel(s, pos, nsg)
 
     # Add noise
     # datasize = conc.shape
@@ -167,7 +167,7 @@ def mcmcPF(xpartminus, wminus, yobv, fDyn, fParm, hLike, hParm, pos, gParm, nsg,
 
     xpart = xpartminus.copy()  # propagation of state
 
-    wupdate = hLike(xpart, yobv, pos, hParm, nsg_n)  # likelihood update
+    wupdate = hLike(xpart, yobv, pos, hParm, nsg)  # likelihood update
 
     if gCon is None:
         wnew = wminus * wupdate
@@ -307,8 +307,8 @@ def mcmcPF(xpartminus, wminus, yobv, fDyn, fParm, hLike, hParm, pos, gParm, nsg,
             np.dot(np.zeros((n, N)).T, np.linalg.inv(SIG)).T * np.zeros((n, N)), axis=0
         )
 
-        xupdate = hLike(State, yobv, pos, hParm, nsg_n)
-        xnewupdate = hLike(newState, yobv, pos, hParm, nsg_n)
+        xupdate = hLike(State, yobv, pos, hParm, nsg)
+        xnewupdate = hLike(newState, yobv, pos, hParm, nsg)
 
         alpha = xnewupdate / xupdate * np.exp(logratio)
 

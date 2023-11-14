@@ -155,7 +155,7 @@ class PlumeEnvironment(gym.Env):
         if Spread < self.threshold:  # np.array_equal(self.goal, self.position_curr):
             done = True
             reward = 100
-            print("done")
+            #print("done")
             # print("goal! cur_position:", self.position_curr, ',step count:', self.step_count)
 
             estimated_x = np.mean(self.theta['x'])
