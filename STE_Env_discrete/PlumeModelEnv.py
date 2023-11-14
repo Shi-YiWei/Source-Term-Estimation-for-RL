@@ -8,7 +8,6 @@ from .utils_env import fDyn, gCon
 
 from .core import sensorModel
 
-
 from .plot_ import drawPlume
 
 
@@ -24,8 +23,8 @@ class PlumeEnvironment(gym.Env):
         self.source_param = {
             "Q": 5,  # Release rate per time unit
             # source coordinates
-            "x": 15.7,
-            "y": 16.3,
+            "x": 15.5,
+            "y": 16.6,
             "z": 0,
             "u": 2,  # wind speed
             "phi": 45 * np.pi / 180,  # wind direction
@@ -52,12 +51,12 @@ class PlumeEnvironment(gym.Env):
         self.domain = [0, length, 0, width, 0, height]
         self.goal = np.array([self.source_param["x"], self.source_param["y"], self.source_param["z"]])
 
-        self.action_space = spaces.Discrete(4)  # Define the action space
-        self.observation_space = 4 #spaces.Box(low=np.zeros(4), high=np.array([length, width, height]))
+        self.action_space = spaces.Box(low=-np.pi, high=np.pi, shape=(1,))  # Define the action space
+        self.observation_space = spaces.Box(low=np.zeros(3), high=np.array([length, width, height]))
 
-        self.N = 700  # number of particles
+        self.N = 2000  # number of particles
         self.speed = 1
-        self.threshold = 0.4
+        self.threshold = 0.2
         self.estimated_list = []
         self.action_list = []
 
@@ -71,11 +70,11 @@ class PlumeEnvironment(gym.Env):
         np.random.seed(nsg_n)
 
         self.action_list = []
+        self.pos_list = []
         # Reset the environment to an initial state and return the initial observation
         # Initialize any other variables if needed
 
         obs = self.startingPosition
-
         self.theta = {
             "x": 0 + self.length * np.random.rand(self.N),
             "y": 0 + self.width * np.random.rand(self.N),
@@ -96,20 +95,20 @@ class PlumeEnvironment(gym.Env):
 
         self.step_count = 0
 
-
-
         if self.render_if:
             plt.cla()
-
-        sensordata = sensorModel(self.source_param, self.pos, self.sensor_param, nsg)
-        obs = np.append(obs, sensordata)
 
         return obs
 
     def step(self, action, nsg):
+
+        nsg_n = nsg.next_seed()
+
         done = False
 
-        self.action_list.append(action)
+        action = np.clip(action, -np.pi, np.pi)
+
+        # self.action_list.append(action)
 
         sensor_data = sensorModel(self.source_param, self.pos, self.sensor_param, nsg)
 
@@ -123,9 +122,15 @@ class PlumeEnvironment(gym.Env):
         # print("sensor_data:", sensor_data)
 
         self.theta, self.Wpnorm, _ = mcmcPF(self.theta, self.Wpnorm, sensor_data, fDyn, self.noise, hLikePlume,
-                                               self.sensor_param, self.pos, None, nsg, gCon)
+                                            self.sensor_param, self.pos, None, nsg, gCon)
 
         self.position_curr, reward_ = self._next_pos(action)
+
+        self.pos_list.append(self.position_curr)
+        self.action_list.append(action)
+
+
+        # print("self.position_curr:", self.position_curr)
 
         # update position
         self.pos = {"x_matrix": self.position_curr[0], "y_matrix": self.position_curr[1],
@@ -150,6 +155,7 @@ class PlumeEnvironment(gym.Env):
         if Spread < self.threshold:  # np.array_equal(self.goal, self.position_curr):
             done = True
             reward = 100
+            #print("done")
             # print("goal! cur_position:", self.position_curr, ',step count:', self.step_count)
 
             estimated_x = np.mean(self.theta['x'])
@@ -159,6 +165,9 @@ class PlumeEnvironment(gym.Env):
 
             self.estimated_list.append((estimated_x, estimated_y))
             # print("action = ", self.action_list)
+            # print("action = ", self.action_list)
+            # print("pos_list = ", self.pos_list)
+
             # if self.count_eps >= 6000:
             #     print("action = ", self.action_list)
 
@@ -169,11 +178,7 @@ class PlumeEnvironment(gym.Env):
 
         reward = reward + reward_
 
-        sensor_data_ = sensorModel(self.source_param, self.pos, self.sensor_param, nsg)
-        obs = self.position_curr
-        obs = np.append(obs, sensor_data_)
-
-        return obs, reward, done, info
+        return self.position_curr, reward, done, info
 
     def render(self, nsg):
 
@@ -207,31 +212,43 @@ class PlumeEnvironment(gym.Env):
 
     def _next_pos(self, action):
 
-        next_pos = self.position_curr.copy()
+        #next_pos = self.position_curr.copy()
+        next_pos = np.zeros(3)
 
-        if action % 4 == 0:
-            next_pos[0] += self.speed
-        elif action % 4 == 1:
-            next_pos[0] -= self.speed
-        elif action % 4 == 2:
-            next_pos[1] += self.speed
-        elif action % 4 == 3:
-            next_pos[1] -= self.speed
+        #print("next_pos:", next_pos)
+
+        x = np.cos(action)
+        y = np.sin(action)
+
+        # print("x=", x, ",y=", y, ",action:", action)
+
+        next_pos[0] = self.position_curr[0] + x * self.speed
+        next_pos[1] = self.position_curr[1] + y * self.speed
+        next_pos[2] = 0
+
+        # print("next_pos[0]:", next_pos[0])
+        # print("next_pos[1]:", next_pos[1])
 
         next_pos, reward_ = self._pos_check(next_pos)
+
+        # print("next_pos after:", next_pos)
+        #
+        # print('\n')
 
         return next_pos, reward_
 
     def _pos_check(self, pos):
+
+        reward_ = 0
+
         if pos[0] < 0 or pos[0] > self.length:
             pos[0] = self.length if pos[0] > self.length else 0
-            reward_ = -50
-        elif pos[1] < 0 or pos[1] > self.width:
+            reward_ = -0
+        if pos[1] < 0 or pos[1] > self.width:
             pos[1] = self.width if pos[1] > self.width else 0
-            reward_ = -50
-        elif pos[2] < 0 or pos[2] > self.height:
+            reward_ = -0
+        if pos[2] < 0 or pos[2] > self.height:
             pos[2] = self.height if pos[2] > self.height else 0
-            reward_ = -50
-        else:
-            reward_ = 0
+            reward_ = -0
+
         return pos, reward_
